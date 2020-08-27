@@ -1,6 +1,5 @@
 #include "Blackjack.h"
 #include<ctime>
-int random();
 int main() {
 	srand(time(NULL));
 	int spilovi;
