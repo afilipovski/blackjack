@@ -5,51 +5,51 @@
 int random();
 class Blackjack {
 public:
-	Blackjack(int _br_spilovi = 1): br_spilovi(_br_spilovi), max_sp_karta(_br_spilovi * 4) {}
-	int podeleni_karti(int karta) {
-		return br_sp_karta[karta - 1];
+	Blackjack(int _nr_decks = 1): nr_decks(_nr_decks), max_sp_card(_nr_decks * 4) {}
+	int cards_dealt(int card) {
+		return nr_sp_card[card - 1];
 	}
 	int max_sp() {
-		return max_sp_karta;
+		return max_sp_card;
 	}
-	void dodadi_karta(int karta) {
-		br_sp_karta[karta - 1]++;
+	void deal_card(int card) {
+		nr_sp_card[card - 1]++;
 	}
 private:
-	int br_spilovi;
-	int br_sp_karta[14] = {0};
-	int max_sp_karta;
+	int nr_decks;
+	int nr_sp_card[14] = {0};
+	int max_sp_card;
 };
-class Igrac {
-	friend std::ostream& pecati_karti(const Igrac &ig, std::ostream &os);
+class Player {
+	friend std::ostream& print_cards(const Player &pl, std::ostream &os);
 public:
-	Igrac(Blackjack &igra): _igra(&igra) {
-		dodadi_karta(random()); dodadi_karta(random());
+	Player(Blackjack &game): _game(&game) {
+		deal_card(random()); deal_card(random());
 	}
 	bool fold() {
 		return _fold;
 	}
-	void set_fold(bool vrednost) {
-		_fold = vrednost;
+	void set_fold(bool value) {
+		_fold = value;
 	}
-	int suma_karti() {
-		return _suma_karti;
+	int sum_cards() {
+		return _sum_cards;
 	}
-	void dodadi_karta(int karta) {
-		if (karta == 1 && (21 - _suma_karti) > 11) {
-			karti.push_back(11);
-			_suma_karti += 11;
+	void deal_card(int card) {
+		if (card == 1 && (21 - _sum_cards) > 11) {
+			cards.push_back(11);
+			_sum_cards += 11;
 		}
 		else {
-			karti.push_back(karta);
-			_suma_karti += ((karta > 11) ? 10 : karta);
+			cards.push_back(card);
+			_sum_cards += ((card > 11) ? 10 : card);
 		}
-		_igra->dodadi_karta(karta);
+		_game->deal_card(card);
 	}
 private:
-	Blackjack *_igra;
+	Blackjack *_game;
 	bool _fold = 0;
-	int _suma_karti = 0;
-	std::vector<int> karti;
+	int _sum_cards = 0;
+	std::vector<int> cards;
 };
-std::ostream& pecati_karti(const Igrac &ig, std::ostream &os);
+std::ostream& print_cards(const Player &pl, std::ostream &os);

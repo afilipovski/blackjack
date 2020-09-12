@@ -6,8 +6,8 @@ int random() {
 		rand_no = 1;
 	return rand_no;
 }
-std::ostream& pecati_karti(const Igrac &ig, std::ostream &os) {
-	for (int i : ig.karti) {
+std::ostream& print_cards(const Player &pl, std::ostream &os) {
+	for (int i : pl.cards) {
 		switch (i) {
 		case 1:
 			os << "A ";
